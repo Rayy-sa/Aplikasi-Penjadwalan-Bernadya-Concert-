@@ -1,4 +1,3 @@
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -16,7 +15,7 @@
     background: #555;
 }
 
-/* Animations */
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -51,19 +50,19 @@
     animation-delay: 0.2s;
 }
 
-/* View Switcher Active State */
+
 .active-view {
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
 }
 
-/* Modal Open State */
+
 #modal-content.open {
     transform: scale(1);
     opacity: 1;
 }
 
-/* Glassmorphism Card Hover */
+
 .event-card {
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
@@ -73,9 +72,7 @@
     background-color: rgba(255, 255, 255, 0.08);
 }
 
-/* --- HERO ENHANCEMENTS --- */
 
-/* 1. Film Grain Overlay */
 .noise-overlay {
     position: fixed;
     top: 0;
@@ -89,7 +86,7 @@
     mix-blend-mode: overlay;
 }
 
-/* 2. Glitch Text Effect */
+
 .glitch {
     position: relative;
 }
@@ -112,7 +109,7 @@
     transform: translate(-2px, -2px);
     animation: glitch-anim-1 2s infinite linear alternate-reverse;
     display: none;
-    /* Hidden by default, shown on hover */
+
 }
 
 .glitch::after {
@@ -193,9 +190,9 @@
     }
 }
 
-/* 3. Parallax Video Container */
+
 #hero-video-container {
     transition: transform 0.1s ease-out;
     transform: scale(1.1);
-    /* Slight zoom to allow movement without showing edges */
+
 }

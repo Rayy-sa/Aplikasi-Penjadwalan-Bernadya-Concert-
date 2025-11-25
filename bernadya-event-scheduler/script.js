@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentView = 'grid'; // 'grid' or 'list'
 
-    // --- DOM Elements ---
     const lyricDisplay = document.getElementById('lyric-display');
     const eventsContainer = document.getElementById('events-container');
     const modal = document.getElementById('modal');
@@ -28,24 +27,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewGridBtn = document.getElementById('view-grid');
     const viewListBtn = document.getElementById('view-list');
 
-    // Countdown Elements
     const cdDays = document.getElementById('cd-days');
     const cdHours = document.getElementById('cd-hours');
     const cdMinutes = document.getElementById('cd-minutes');
     const cdLabel = document.getElementById('countdown-label');
 
-    // --- Lyric Generator ---
     function setRandomLyric() {
         const randomIndex = Math.floor(Math.random() * LYRICS.length);
         lyricDisplay.textContent = `"${LYRICS[randomIndex]}"`;
     }
     setRandomLyric();
 
-    // --- Countdown Logic ---
+
     function updateCountdown() {
         const now = new Date().getTime();
 
-        // Find nearest future marked event
+
         const futureMarkedEvents = events
             .filter(e => e.marked && new Date(e.date).getTime() > now)
             .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
@@ -72,13 +69,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     setInterval(updateCountdown, 1000);
-    updateCountdown(); // Initial call
+    updateCountdown();
 
-    // --- Event Rendering ---
+
     function renderEvents() {
         eventsContainer.innerHTML = '';
 
-        // Update Grid/List Classes
+
         if (currentView === 'grid') {
             eventsContainer.classList.add('grid-cols-1', 'md:grid-cols-3');
             eventsContainer.classList.remove('flex', 'flex-col');
@@ -95,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.className = `event-card relative bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-xl overflow-hidden group ${currentView === 'list' ? 'flex justify-between items-center' : ''}`;
 
-            // Card Content
+
             const contentHtml = `
                 <div class="${currentView === 'list' ? 'flex-1' : ''}">
                     <p class="text-xs text-gray-400 uppercase tracking-widest mb-2">${dateStr} • ${timeStr}</p>
@@ -104,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
 
-            // Actions
             const actionsHtml = `
                 <div class="flex items-center gap-4 ${currentView === 'grid' ? 'mt-6 justify-between' : ''}">
                     <button onclick="toggleMark(${event.id})" class="transition-transform active:scale-90 focus:outline-none" title="Mark as Attending">
@@ -123,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Actions ---
     window.toggleMark = (id) => {
         const event = events.find(e => e.id === id);
         if (event) {
@@ -147,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('bernadya_events', JSON.stringify(events));
     }
 
-    // --- Modal Logic ---
     function openModal() {
         modal.classList.remove('hidden');
         setTimeout(() => modalContent.classList.add('open'), 10);
@@ -191,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal();
     });
 
-    // --- View Switcher ---
     viewGridBtn.addEventListener('click', () => {
         currentView = 'grid';
         viewGridBtn.classList.add('active-view');
@@ -206,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderEvents();
     });
 
-    // --- Parallax Effect ---
+
     const heroSection = document.getElementById('hero-section');
     const heroVideo = document.getElementById('hero-video-container');
 
@@ -215,18 +208,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const { clientX, clientY } = e;
             const { innerWidth, innerHeight } = window;
 
-            // Calculate percentage from center (-1 to 1)
+
             const x = (clientX / innerWidth - 0.5) * 2;
             const y = (clientY / innerHeight - 0.5) * 2;
 
-            // Move video slightly in opposite direction
-            const moveX = -x * 20; // Max 20px movement
+
+            const moveX = -x * 20;
             const moveY = -y * 20;
 
             heroVideo.style.transform = `scale(1.1) translate(${moveX}px, ${moveY}px)`;
         });
     }
 
-    // Initial Render
+
     renderEvents();
 });
