@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bernadya Concert Scheduler</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        'deep-black': '#050505',
+                        'dark-zinc': '#18181b',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body
+    class="bg-deep-black text-white font-sans antialiased overflow-x-hidden selection:bg-white/20 selection:text-white">
+
+    <!-- Film Grain Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- HERO SECTION -->
+    <section id="hero-section" class="relative h-screen w-full overflow-hidden flex items-center justify-center">
+        <!-- Video Background -->
+        <div id="hero-video-container" class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-deep-black z-10"></div>
+            <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-60">
+                <source src="bernadya.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-20 text-center px-4 max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-light tracking-[0.2em] mb-6 animate-fade-in glitch"
+                data-text="BERNADYA CONCERT">
+                BERNADYA CONCERT
+            </h1>
+
+            <div class="h-px w-24 bg-white/30 mx-auto mb-8"></div>
+
+            <!-- Lyric Generator -->
+            <p id="lyric-display"
+                class="text-lg md:text-xl font-thin italic text-gray-300 mb-12 min-h-[3rem] animate-fade-in-up">
+                "Loading lyrics..."
+            </p>
+
+            <!-- Countdown -->
+            <div id="countdown-container"
+                class="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 inline-block animate-fade-in-up delay-200">
+                <p class="text-xs tracking-widest uppercase text-gray-400 mb-4">Next Attending Event</p>
+                <div id="countdown-timer" class="flex gap-4 md:gap-8 justify-center text-center">
+                    <div>
+                        <span class="block text-3xl md:text-5xl font-light" id="cd-days">00</span>
+                        <span class="text-[10px] uppercase tracking-wider text-gray-500">Days</span>
+                    </div>
+                    <div>
+                        <span class="block text-3xl md:text-5xl font-light" id="cd-hours">00</span>
+                        <span class="text-[10px] uppercase tracking-wider text-gray-500">Hours</span>
+                    </div>
+                    <div>
+                        <span class="block text-3xl md:text-5xl font-light" id="cd-minutes">00</span>
+                        <span class="text-[10px] uppercase tracking-wider text-gray-500">Minutes</span>
+                    </div>
+                </div>
+                <p id="countdown-label" class="mt-4 text-sm font-light text-gray-400">Menunggu kabar...</p>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- SCHEDULER SECTION -->
+    <section class="relative z-20 min-h-screen px-4 py-20 max-w-6xl mx-auto">
+
+        <!-- Controls -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
+            <h2 class="text-2xl font-light tracking-widest uppercase">Upcoming Shows</h2>
+
+            <div class="flex items-center gap-4">
+                <!-- View Switcher -->
+                <div class="flex bg-dark-zinc rounded-lg p-1 border border-white/10">
+                    <button id="view-grid"
+                        class="p-2 rounded hover:bg-white/10 transition-colors text-white/70 hover:text-white active-view">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                            </path>
+                        </svg>
+                    </button>
+                    <button id="view-list"
+                        class="p-2 rounded hover:bg-white/10 transition-colors text-white/70 hover:text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Add Event Button -->
+                <button id="btn-open-modal"
+                    class="px-6 py-2 bg-white text-black text-sm font-medium tracking-wider uppercase hover:bg-gray-200 transition-colors">
+                    Add Event
+                </button>
+            </div>
+        </div>
+
+        <!-- Events Container -->
+        <div id="events-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-500">
+            <!-- Events injected via JS -->
+        </div>
+
+    </section>
+
+    <!-- Add Event Modal -->
+    <div id="modal" class="fixed inset-0 z-50 hidden flex items-center justify-center">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" id="modal-backdrop"></div>
+        <div class="relative bg-dark-zinc border border-white/10 p-8 w-full max-w-md mx-4 shadow-2xl transform scale-95 opacity-0 transition-all duration-300"
+            id="modal-content">
+            <h3 class="text-xl font-light tracking-widest uppercase mb-6 text-center">New Event</h3>
+
+            <form id="event-form" class="space-y-6">
+                <div class="space-y-2">
+                    <label class="text-xs uppercase tracking-wider text-gray-500">Event Title</label>
+                    <input type="text" id="input-title" required
+                        class="w-full bg-black/30 border border-white/10 p-3 text-sm focus:border-white/50 focus:outline-none transition-colors text-white placeholder-gray-600"
+                        placeholder="e.g. Jakarta Concert">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-xs uppercase tracking-wider text-gray-500">Location</label>
+                    <input type="text" id="input-location" required
+                        class="w-full bg-black/30 border border-white/10 p-3 text-sm focus:border-white/50 focus:outline-none transition-colors text-white placeholder-gray-600"
+                        placeholder="e.g. GBK Stadium">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <label class="text-xs uppercase tracking-wider text-gray-500">Date</label>
+                        <input type="date" id="input-date-only" required
+                            class="w-full bg-black/30 border border-white/10 p-3 text-sm focus:border-white/50 focus:outline-none transition-colors text-white [color-scheme:dark]">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs uppercase tracking-wider text-gray-500">Time</label>
+                        <input type="time" id="input-time-only" required
+                            class="w-full bg-black/30 border border-white/10 p-3 text-sm focus:border-white/50 focus:outline-none transition-colors text-white [color-scheme:dark]">
+                    </div>
+                </div>
+
+                <div class="pt-4 flex gap-4">
+                    <button type="button" id="btn-close-modal"
+                        class="flex-1 py-3 border border-white/20 text-xs tracking-widest uppercase hover:bg-white/5 transition-colors">Cancel</button>
+                    <button type="submit"
+                        class="flex-1 py-3 bg-white text-black text-xs tracking-widest uppercase hover:bg-gray-200 transition-colors">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
