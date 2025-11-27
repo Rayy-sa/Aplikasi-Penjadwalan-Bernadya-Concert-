@@ -38,3 +38,5 @@ Aplikasi web Single Page Application (SPA) untuk menampilkan dan mengatur jadwal
 - `style.css`: Styling tambahan untuk animasi dan efek khusus.
 - `script.js`: Logika JavaScript untuk fitur-fitur aplikasi.
 - `README.md`: Dokumentasi proyek ini.
+
+src/assets/ bernadya.jpg
