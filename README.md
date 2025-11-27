@@ -39,4 +39,11 @@ Aplikasi web Single Page Application (SPA) untuk menampilkan dan mengatur jadwal
 - `script.js`: Logika JavaScript untuk fitur-fitur aplikasi.
 - `README.md`: Dokumentasi proyek ini.
 
-src/assets/ bernadya.jpg
+![Screenshot Aplikasi](assets/aplikasi1.png)
+![Screenshot Aplikasi](assets/aplikasi2.png)
+
+## Link Design Figma
+
+```bash
+https://www.figma.com/design/q99GAx1HgRRJ6YiW5G5FoX/Untitled?node-id=2-240&t=jPRVV9ExfxVl9Exc-1
+```
